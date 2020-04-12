@@ -32,16 +32,14 @@ const Article = db.defineModel('Article', {
     type: Sequelize.STRING
   },
   pic: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: true
   },
-  tagId: {
-    type: Sequelize.INTEGER,
+  tagsId: {
+    type: Sequelize.STRING,
     allowNull: true,
-    references: {
-      model: 'Tags',
-      key: 'id',
-    }
   }
 });
+
 
 module.exports = Article;

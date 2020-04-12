@@ -1,4 +1,5 @@
 const dbArtcle = require('../../db/article');
+const dbTags = require('../../db/tags')
 const utils = require('../../utils');
 const API_STATUS = require('../api_status')
 
@@ -7,6 +8,15 @@ const gets = async (req, res) => {
   let offset = query.page? Number(query.page) : 1;
   let limit = query.size? Number(query.size) : 10;
   let result = await dbArtcle.gets({ offset, limit });
+  for (let it of result) {
+    it['createTime'] = utils.format(it['createTime'])
+    if (it.tagsId) {
+      let ids = it.tagsId.split(',').map(n => Number(n))
+      it.tags = await dbTags.getsByIds({ ids })
+    } else {
+      it.tags = []
+    }
+  }
   if (result) {
     res.status(200).json({
       code: API_STATUS.SUCCESS,

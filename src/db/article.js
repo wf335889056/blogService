@@ -1,12 +1,9 @@
 const articleModels = require('../models/article');
 const tagsModel = require('../models/tags');
 
-articleModels.belongsTo(tagsModel, { foreignKey: 'tagId', targetKey: 'id', as: 'tags'});
-
 const gets = async query => {  
   let { offset, limit } = query;
-  let res = await articleModels.findAll({ include: [{ model: tagsModel, as: 'tags' }],
-  limit })
+  let res = await articleModels.findAll({ limit })
   return res
 }
 
@@ -27,7 +24,9 @@ const update = async query => {
 }
 
 const get = async query => {
-  let res = await articleModels.findOne({ include: [{ model: tagsModel, as: 'tags' }], where: { id: query }});
+  // let res = await articleModels.findOne(
+  //   { include: [{ model: tagsModel, as: 'tags', attributes: ['title'] }], 
+  //   where: { id: query }});
   res.visits++;
   await res.save();
   return res

@@ -1,7 +1,7 @@
 const Upload = require('../controller/upload');
 const version = require('../config').version;
 
-const routes = require(`./v${Number.parseInt(version)}`)
+const routes = require(`./v${Number(version)}`)
 
 // console.log(routes)
 
@@ -29,5 +29,5 @@ module.exports = app => {
     })
   })
 
-  routes.forEach(item => app[item.method](`/api/v${Number.parseInt(version)}/${item.url.slice(1)}`, item.handler))
+  routes.forEach(item => app[item.method](`/api/v${Number(version)}/${item.url.slice(1)}`, item.handler))
 };

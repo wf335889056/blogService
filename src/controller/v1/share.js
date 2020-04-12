@@ -14,12 +14,19 @@ const get = async (req, res) => {
         data: '分享获取失败'
       })
     } else {
-      let result = JSON.parse(data)
-      result['updateTime'] = utils.format(result['updateTime']);
-      res.json({
-        code: API_STATUS.SUCCESS,
-        data: result
-      })
+      if (data) {
+        let result = JSON.parse(data)
+        result['updateTime'] = utils.format(result['updateTime']);
+        res.json({
+          code: API_STATUS.SUCCESS,
+          data: result
+        })
+      } else {
+        res.json({
+          code: API_STATUS.SUCCESS,
+          data: {}
+        })
+      }
     }   
   })
 }

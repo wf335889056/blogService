@@ -1,8 +1,14 @@
 const tagsModels = require('../models/tags');
 
 const gets = async query => {
-  let { offset, limit } = query;
+  let { offset, limit, ids } = query;
   let res = await tagsModels.findAll({ limit });
+  return res
+}
+
+const getsByIds = async query => {
+  let { ids } = query;
+  let res = res = await tagsModels.findAll({ where: { id: ids }, attributes: ['id', 'title']})
   return res
 }
 
@@ -27,4 +33,5 @@ module.exports = {
   add,
   del,
   update,
+  getsByIds,
 }

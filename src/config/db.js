@@ -9,6 +9,9 @@ const sequelize = new Sequelize(db.database, db.user, db.password, {
     min: 0,
     idle: 10000,
   },
+  query: { 
+    raw: true, 
+  },
   // timezone: '+8:00', // 由于orm用的UTC时间，这里必须加上东八区，否则取出来的时间相差8小时
   dialectOptions: {  // 让读取date类型数据时返回字符串而不是UTC时间
     dateStrings: true,
@@ -57,12 +60,12 @@ exports.defineModel = function(name, attributes) {
     collate: 'utf8mb4_general_ci',
     hooks: {
       beforeBulkCreate: function(obj) {
-        obj.version = 0;
+        obj.version = 1;
       },
       beforeValidate: function(obj) {
         if (obj.isNewRecord) {
           console.log('first');
-          obj.version = 0;
+          obj.version = 1;
         } else {
           console.log('not first');
           obj.version = obj.version + 1;
